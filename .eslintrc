@@ -1,0 +1,27 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "rules": {
+    // THIS IS SPARTA!!
+    "id-length": 0,
+    // THIS IS... a love of expressions
+    "no-nested-ternary": 0,
+    // console <3
+    "no-console": 0,
+    // For components
+    "new-cap": 0,
+    // Semicolons jank up lisp-y indentation
+    "semi": [2, "never"],
+    "no-unexpected-multiline": 2,
+    // So does brace-style
+    "brace-style": 0
+  },
+  "globals": {
+    "PL": true,
+    "React": true,
+    "_": true,
+    "moment": true,
+    "tinycolor": true,
+    "Auth0": true
+  }
+}
