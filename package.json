@@ -1,0 +1,24 @@
+{
+  "name": "avg-lines",
+  "version": "0.1.0",
+  "description": "Simple CLI to measure LOC distribution",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashtonwar/avg-lines.git"
+  },
+  "keywords": [
+    "lines",
+    "modularity",
+    "code"
+  ],
+  "author": "Ashton War <me@ashtonwar.com> (http://ashtonwar.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ashtonwar/avg-lines/issues"
+  },
+  "homepage": "https://github.com/ashtonwar/avg-lines#readme"
+}
