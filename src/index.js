@@ -13,8 +13,8 @@ export default args => new Promise((resolve, reject) => {
   process.stderr.on('data', ::console.error)
   process.stdout.on('data', input => (
     files.push(
-      ...input.split('\n').filter(v => v).map(l =>
-        l.match(/^ *(\d+) +(.+)$/)).filter(v => v).
+      ...input.split('\n').map(l =>
+        l && l.match(/^ *(\d+) +(.+)$/)).filter(v => v).
         map(([, val, file]) => [parseInt(val, 10), file]).
         filter(([, filename]) => filename !== 'total'))))
   process.on('close', exit => {
