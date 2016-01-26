@@ -7,7 +7,7 @@ export default args => new Promise((resolve, reject) =>
   exec(`find ${args} | xargs wc -l`, {maxBuffer: 1024 ** 2}, (err, input) => {
     if (err) reject(err)
     else {
-      const files = input.split('\n').slice(0, -2).map(l =>
+      const files = input.split('\n').filter(v => v).slice(0, -1).map(l =>
         l.match(/^ *(\d+) +(.+)$/).slice(1)).
         map(([val, file]) => [parseInt(val, 10), file]).
         sort(([v0], [v1]) => v0 - v1)

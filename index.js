@@ -24,7 +24,9 @@ exports.default = function (args) {
   return new Promise(function (resolve, reject) {
     return (0, _child_process.exec)('find ' + args + ' | xargs wc -l', { maxBuffer: Math.pow(1024, 2) }, function (err, input) {
       if (err) reject(err);else {
-        var files = input.split('\n').slice(0, -2).map(function (l) {
+        var files = input.split('\n').filter(function (v) {
+          return v;
+        }).slice(0, -1).map(function (l) {
           return l.match(/^ *(\d+) +(.+)$/).slice(1);
         }).map(function (_ref3) {
           var _ref4 = _slicedToArray(_ref3, 2);
