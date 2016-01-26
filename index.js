@@ -43,9 +43,9 @@ exports.default = function (args) {
       return files.push.apply(files, _toConsumableArray(input.split('\n').filter(function (v) {
         return v;
       }).map(function (l) {
-        return l.match(/^ *(\d+) +(.+)$/).filter(function (v) {
-          return v;
-        });
+        return l.match(/^ *(\d+) +(.+)$/);
+      }).filter(function (v) {
+        return v;
       }).map(function (_ref3) {
         var _ref4 = _slicedToArray(_ref3, 3);
 
