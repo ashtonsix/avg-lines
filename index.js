@@ -19,10 +19,17 @@ var sum = function sum(arr) {
     return pv + v;
   }, 0);
 };
+var insertTypeOption = function insertTypeOption(args) {
+  return (/('?[-\|])/.test(args) ? args.replace(/('?[-\|])/, '-type f $&') : args + ' -type f'
+  );
+};
+var generateCommand = function generateCommand(args) {
+  return 'find ' + insertTypeOption(args) + ' | xargs wc -l';
+};
 
 exports.default = function (args) {
   return new Promise(function (resolve, reject) {
-    return (0, _child_process.exec)('find -type f ' + args + ' | xargs wc -l', { maxBuffer: Math.pow(1024, 2) }, function (err, input) {
+    return (0, _child_process.exec)(generateCommand(args), { maxBuffer: Math.pow(1024, 2) }, function (err, input) {
       if (err) reject(err);else {
         var files = input.split('\n').filter(function (v) {
           return v;
@@ -49,7 +56,7 @@ exports.default = function (args) {
           var filename = _ref10[1];
           return filename !== 'total';
         });
-        if (!files.length) reject('No files matched `find -type f ' + args + '`');else {
+        if (!files.length) reject('No files matched `' + generateCommand(args) + '`');else {
           resolve({
             numFiles: files.length,
             numLines: sum(files),
