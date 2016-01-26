@@ -11,12 +11,12 @@ export default args => new Promise((resolve, reject) => {
   const files = []
   const interval = setInterval(() => console.log(`checked ${files.length} files`), 3000)
   process.stderr.on('data', ::console.error)
-  process.stdout.on('data', input => (
+  process.stdout.on('data', input =>
     files.push(
       ...input.split('\n').map(l =>
         l && l.match(/^ *(\d+) +(.+)$/)).filter(v => v).
         map(([, val, file]) => [parseInt(val, 10), file]).
-        filter(([, filename]) => filename !== 'total'))))
+        filter(([, filename]) => filename !== 'total')))
   process.on('close', exit => {
     clearInterval(interval)
     if (exit) reject(exit)
