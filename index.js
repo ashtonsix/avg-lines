@@ -26,7 +26,7 @@ exports.default = function (args) {
       if (err) reject(err);else {
         var files = input.split('\n').filter(function (v) {
           return v;
-        }).slice(0, -1).map(function (l) {
+        }).map(function (l) {
           return l.match(/^ *(\d+) +(.+)$/).slice(1);
         }).map(function (_ref3) {
           var _ref4 = _slicedToArray(_ref3, 2);
@@ -43,6 +43,11 @@ exports.default = function (args) {
 
           var v1 = _ref7[0];
           return v0 - v1;
+        }).filter(function (_ref9) {
+          var _ref10 = _slicedToArray(_ref9, 2);
+
+          var filename = _ref10[1];
+          return filename !== 'total';
         });
         if (!files.length) reject('No files matched `find ' + args + '`');else {
           resolve({
