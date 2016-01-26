@@ -8,6 +8,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _child_process = require('child_process');
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 var i80 = function i80(arr) {
   return Math.ceil(arr.length * 0.8);
 };
@@ -29,42 +31,55 @@ var generateCommand = function generateCommand(args) {
 
 exports.default = function (args) {
   return new Promise(function (resolve, reject) {
-    return (0, _child_process.exec)(generateCommand(args), { maxBuffer: Math.pow(1024, 2) }, function (err, input) {
-      if (err) reject(err);else {
-        var files = input.split('\n').filter(function (v) {
+    var _context;
+
+    var process = (0, _child_process.exec)(generateCommand(args));
+    var files = [];
+    var interval = setInterval(function () {
+      return console.log('checked ' + files.length + ' files');
+    }, 3000);
+    process.stderr.on('data', (_context = console).error.bind(_context));
+    process.stdout.on('data', function (input) {
+      return files.push.apply(files, _toConsumableArray(input.split('\n').filter(function (v) {
+        return v;
+      }).map(function (l) {
+        return l.match(/^ *(\d+) +(.+)$/).filter(function (v) {
           return v;
-        }).map(function (l) {
-          return l.match(/^ *(\d+) +(.+)$/).slice(1);
-        }).map(function (_ref3) {
-          var _ref4 = _slicedToArray(_ref3, 2);
-
-          var val = _ref4[0];
-          var file = _ref4[1];
-          return [parseInt(val, 10), file];
-        }).sort(function (_ref5, _ref6) {
-          var _ref8 = _slicedToArray(_ref5, 1);
-
-          var v0 = _ref8[0];
-
-          var _ref7 = _slicedToArray(_ref6, 1);
-
-          var v1 = _ref7[0];
-          return v0 - v1;
-        }).filter(function (_ref9) {
-          var _ref10 = _slicedToArray(_ref9, 2);
-
-          var filename = _ref10[1];
-          return filename !== 'total';
         });
-        if (!files.length) reject('No files matched `' + generateCommand(args) + '`');else {
-          resolve({
-            numFiles: files.length,
-            numLines: sum(files),
-            avgLines: files[i80(files)][0],
-            linesIneqaulity: sum(files.slice(i80(files))) / sum(files),
-            largestFileName: files.slice(-1)[0][1],
-            largestFile: files.slice(-1)[0][0] });
-        }
+      }).map(function (_ref3) {
+        var _ref4 = _slicedToArray(_ref3, 3);
+
+        var val = _ref4[1];
+        var file = _ref4[2];
+        return [parseInt(val, 10), file];
+      }).filter(function (_ref5) {
+        var _ref6 = _slicedToArray(_ref5, 2);
+
+        var filename = _ref6[1];
+        return filename !== 'total';
+      })));
+    });
+    process.on('close', function (exit) {
+      clearInterval(interval);
+      if (exit) reject(exit);
+      files.sort(function (_ref7, _ref8) {
+        var _ref10 = _slicedToArray(_ref7, 1);
+
+        var v0 = _ref10[0];
+
+        var _ref9 = _slicedToArray(_ref8, 1);
+
+        var v1 = _ref9[0];
+        return v0 - v1;
+      });
+      if (!files.length) reject('No files matched `' + generateCommand(args) + '`');else {
+        resolve({
+          numFiles: files.length,
+          numLines: sum(files),
+          avgLines: files[i80(files)][0],
+          linesIneqaulity: sum(files.slice(i80(files))) / sum(files),
+          largestFileName: files.slice(-1)[0][1],
+          largestFile: files.slice(-1)[0][0] });
       }
     });
   });

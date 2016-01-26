@@ -6,20 +6,27 @@ const insertTypeOption = args =>
   /('?[-\|])/.test(args) ? args.replace(/('?[-\|])/, '-type f $&') : `${args} -type f`
 const generateCommand = args => `find ${insertTypeOption(args)} | xargs wc -l`
 
-export default args => new Promise((resolve, reject) => (
-  exec(generateCommand(args), {maxBuffer: 1024 ** 2}, (err, input) => {
-    if (err) reject(err)
+export default args => new Promise((resolve, reject) => {
+  const process = exec(generateCommand(args))
+  const files = []
+  const interval = setInterval(() => console.log(`checked ${files.length} files`), 3000)
+  process.stderr.on('data', ::console.error)
+  process.stdout.on('data', input => (
+    files.push(
+      ...input.split('\n').filter(v => v).map(l => (
+        l.match(/^ *(\d+) +(.+)$/).filter(v => v))).
+        map(([, val, file]) => [parseInt(val, 10), file]).
+        filter(([, filename]) => filename !== 'total'))))
+  process.on('close', exit => {
+    clearInterval(interval)
+    if (exit) reject(exit)
+    files.sort(([v0], [v1]) => v0 - v1)
+    if (!files.length) reject(`No files matched \`${generateCommand(args)}\``)
     else {
-      const files = input.split('\n').filter(v => v).map(l => (
-        l.match(/^ *(\d+) +(.+)$/).slice(1))).
-        map(([val, file]) => [parseInt(val, 10), file]).
-        sort(([v0], [v1]) => v0 - v1).filter(([, filename]) => filename !== 'total')
-      if (!files.length) reject(`No files matched \`${generateCommand(args)}\``)
-      else {
-        resolve({
-          numFiles: files.length,
-          numLines: sum(files),
-          avgLines: files[i80(files)][0],
-          linesIneqaulity: sum(files.slice(i80(files))) / sum(files),
-          largestFileName: files.slice(-1)[0][1],
-          largestFile: files.slice(-1)[0][0]})}}})))
+      resolve({
+        numFiles: files.length,
+        numLines: sum(files),
+        avgLines: files[i80(files)][0],
+        linesIneqaulity: sum(files.slice(i80(files))) / sum(files),
+        largestFileName: files.slice(-1)[0][1],
+        largestFile: files.slice(-1)[0][0]})}})})
