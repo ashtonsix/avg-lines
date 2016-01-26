@@ -25,5 +25,15 @@ Arguments are passed straight to `find` which enables sophisticated queries, to 
 avg-lines . -name '*.js' -not -path '*/node_modules/*'
 ```
 
+## API
+You can also use `avg-lines` programmatically like this:
+
+```js
+import avgLines from 'avg-lines'
+
+avgLines(`. -name '*.js'`).then(::console.log)
+// {numFiles, numLines, avgLines, linesIneqaulity, largestFileName, largestFile}
+```
+
 ## License
 ISC © Ashton War
