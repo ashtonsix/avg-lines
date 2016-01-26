@@ -4,7 +4,7 @@ const i80 = arr => Math.ceil(arr.length * 0.8)
 const sum = arr => arr.reduce((pv, [v]) => pv + v, 0)
 
 export default args => new Promise((resolve, reject) =>
-  exec(`find ${args} | xargs wc -l`, {maxBuffer: 1024 ** 2}, (err, input) => {
+  exec(`find ${args} -type f | xargs wc -l`, {maxBuffer: 1024 ** 2}, (err, input) => {
     if (err) reject(err)
     else {
       const files = input.split('\n').filter(v => v).map(l =>
