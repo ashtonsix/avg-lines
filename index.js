@@ -40,10 +40,8 @@ exports.default = function (args) {
     }, 3000);
     process.stderr.on('data', (_context = console).error.bind(_context));
     process.stdout.on('data', function (input) {
-      return files.push.apply(files, _toConsumableArray(input.split('\n').filter(function (v) {
-        return v;
-      }).map(function (l) {
-        return l.match(/^ *(\d+) +(.+)$/);
+      return files.push.apply(files, _toConsumableArray(input.split('\n').map(function (l) {
+        return l && l.match(/^ *(\d+) +(.+)$/);
       }).filter(function (v) {
         return v;
       }).map(function (_ref3) {
@@ -77,7 +75,7 @@ exports.default = function (args) {
           numFiles: files.length,
           numLines: sum(files),
           avgLines: files[i80(files)][0],
-          linesIneqaulity: sum(files.slice(i80(files))) / sum(files),
+          linesInequality: sum(files.slice(i80(files))) / sum(files),
           largestFileName: files.slice(-1)[0][1],
           largestFile: files.slice(-1)[0][0] });
       }

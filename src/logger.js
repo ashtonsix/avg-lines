@@ -7,9 +7,9 @@ const log = str => {
   console.log(newStr)}
 
 export default avgLines(args).then(
-  ({numFiles, numLines, avgLines: avgLines$, linesIneqaulity, largestFileName, largestFile}) => (
+  ({numFiles, numLines, avgLines: avgLines$, linesInequality, largestFileName, largestFile}) => (
     log(`Checked **${numFiles}** files (**${numLines}** LOC):`),
     log(`  **80%** of files contain > **${avgLines$}** LOC`),
-    log(`  **20%** of files contain **${(linesIneqaulity * 100).toFixed(2)}%** of the total LOC`),
+    log(`  **20%** of files contain **${(linesInequality * 100).toFixed(2)}%** of the total LOC`),
     log(`  The largest file (**${largestFileName}**) contains **${largestFile}** LOC`))).
   catch(::console.error)

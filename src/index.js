@@ -27,6 +27,6 @@ export default args => new Promise((resolve, reject) => {
         numFiles: files.length,
         numLines: sum(files),
         avgLines: files[i80(files)][0],
-        linesIneqaulity: sum(files.slice(i80(files))) / sum(files),
+        linesInequality: sum(files.slice(i80(files))) / sum(files),
         largestFileName: files.slice(-1)[0][1],
         largestFile: files.slice(-1)[0][0]})}})})

@@ -32,7 +32,7 @@ You can also use `avg-lines` programmatically like this:
 import avgLines from 'avg-lines'
 
 avgLines(`. -name '*.js'`).then(::console.log)
-// {numFiles, numLines, avgLines, linesIneqaulity, largestFileName, largestFile}
+// {numFiles, numLines, avgLines, linesInequality, largestFileName, largestFile}
 ```
 
 ## License

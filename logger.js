@@ -28,8 +28,8 @@ exports.default = (0, _index2.default)(args).then(function (_ref) {
   var numFiles = _ref.numFiles;
   var numLines = _ref.numLines;
   var avgLines$ = _ref.avgLines;
-  var linesIneqaulity = _ref.linesIneqaulity;
+  var linesInequality = _ref.linesInequality;
   var largestFileName = _ref.largestFileName;
   var largestFile = _ref.largestFile;
-  return log('Checked **' + numFiles + '** files (**' + numLines + '** LOC):'), log('  **80%** of files contain > **' + avgLines$ + '** LOC'), log('  **20%** of files contain **' + (linesIneqaulity * 100).toFixed(2) + '%** of the total LOC'), log('  The largest file (**' + largestFileName + '**) contains **' + largestFile + '** LOC');
+  return log('Checked **' + numFiles + '** files (**' + numLines + '** LOC):'), log('  **80%** of files contain > **' + avgLines$ + '** LOC'), log('  **20%** of files contain **' + (linesInequality * 100).toFixed(2) + '%** of the total LOC'), log('  The largest file (**' + largestFileName + '**) contains **' + largestFile + '** LOC');
 }).catch((_context = console).error.bind(_context));
