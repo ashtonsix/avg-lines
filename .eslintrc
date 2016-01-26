@@ -15,13 +15,5 @@
     "no-unexpected-multiline": 2,
     // So does brace-style
     "brace-style": 0
-  },
-  "globals": {
-    "PL": true,
-    "React": true,
-    "_": true,
-    "moment": true,
-    "tinycolor": true,
-    "Auth0": true
   }
 }

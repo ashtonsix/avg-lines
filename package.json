@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Simple CLI to measure LOC distribution",
   "main": "index.js",
+  "bin": "logger.js",
   "scripts": {
     "prestart": "rimraf index.js",
     "start": "babel src -d .",
