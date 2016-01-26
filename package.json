@@ -1,6 +1,6 @@
 {
   "name": "avg-lines",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Simple CLI to measure LOC distribution",
   "main": "index.js",
   "bin": "logger.js",
